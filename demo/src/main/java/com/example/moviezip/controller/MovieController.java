@@ -144,7 +144,7 @@ public class MovieController {
         String userNameFromToken = jwtUtil.extractUsername(jwt); // jwtUtil은 JWT 유틸리티 클래스
 
         // 토큰 유효성 검사
-        if (!jwtUtil.validateToken(jwt, customUserDetailsService.loadUserByUsername(userNameFromToken))) {
+        if (!jwtUtil.validateToken(jwt)) {
             throw new RuntimeException("Invalid or expired token");  // 적절한 예외 처리
         }
         List<Movie> movieList = wishService.getWishMovie(userId);
