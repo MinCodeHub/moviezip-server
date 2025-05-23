@@ -32,6 +32,9 @@ public class CustomUserDetails implements UserDetails {
         return List.of(() -> user.getRole().name()); // 역할을 GrantedAuthority로 변환
     }
 
+    public Long getUserId(){
+        return user.getId();
+    }
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -64,8 +67,11 @@ public class CustomUserDetails implements UserDetails {
         return true; //계정 활성화 여부
     }
 
-    public Long getUser() {
-        return user.getId();
+//    public Long getUser() {
+//        return user.getId();
+//    }
+    public String getUser() {
+        return user.getUserId();
     }
 
     public User getUser2() {

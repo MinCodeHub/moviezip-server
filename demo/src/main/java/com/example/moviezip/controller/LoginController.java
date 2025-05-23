@@ -1,29 +1,27 @@
 package com.example.moviezip.controller;
 
+
 import com.example.moviezip.domain.CustomUserDetails;
 import com.example.moviezip.domain.RefreshToken;
-import com.example.moviezip.domain.User;
+
 import com.example.moviezip.domain.jwt.AuthenticationRequest;
 import com.example.moviezip.domain.jwt.AuthenticationResponse;
 import com.example.moviezip.service.CustomUserDetailsService;
 import com.example.moviezip.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import com.example.moviezip.util.jwtUtil;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -51,16 +49,28 @@ public class LoginController {
                                                        HttpServletResponse response) throws Exception {
 
         try {
+            // 1. 사용자 인증
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authenticationRequest.getUsername(),
                             authenticationRequest.getPassword())
             );
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            // 2. 인증된 사용자 정보
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            Long userId = userDetails.getUserId(); // 또는 getUserId()
+            // 3. 사용자 ID 및 Role 추출
+            String username = userDetails.getUsername();
 
-            final String accessToken = jwtTokenUtil.generateToken(userDetails);
+            String role = userDetails.getAuthorities().stream()
+                    .findFirst()
+                    .map(GrantedAuthority::getAuthority)
+                    .orElse("USER"); // 기본값
 
-            RefreshToken refreshToken = refreshTokenService.createOrUpdateRefreshToken(userDetails, refreshTokenExpirationTime, response);
+            //final String accessToken = jwtTokenUtil.createAccessToken(userDetails);
+            // 4. JWT 생성
+            final String accessToken = jwtTokenUtil.createAccessToken(userId, username,role);
+
+            RefreshToken refreshToken = refreshTokenService.createOrUpdateRefreshToken(userDetails, response);
 
             // Refresh Token을 HttpOnly 쿠키에 저장
             Cookie cookie = new Cookie("refreshToken", refreshToken.getToken());
@@ -115,7 +125,7 @@ public class LoginController {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-        refreshTokenService.createOrUpdateRefreshToken(userDetails, refreshTokenExpirationTime, response);
+        refreshTokenService.createOrUpdateRefreshToken(userDetails, response);
 
         // access token을 JSON 응답으로 반환
         return ResponseEntity.ok(new AuthenticationResponse(newAccessToken));

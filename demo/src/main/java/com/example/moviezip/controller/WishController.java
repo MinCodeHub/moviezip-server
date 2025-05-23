@@ -25,22 +25,22 @@ public class WishController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/movies")
     public List<Movie> getWishMovies(@AuthenticationPrincipal CustomUserDetails user) {
-        List<Movie> movieList = wishService.getWishMovie(user.getUser());
+        List<Movie> movieList = wishService.getWishMovie(user.getUserId());
         for(Movie movie :movieList){
             System.out.println("찜한영화 : "+movie.getMvTitle());
         }
 
-        return wishService.getWishMovie(user.getUser());
+        return wishService.getWishMovie(user.getUserId());
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/reviews")
     public List<Review> getWishReviews(@AuthenticationPrincipal CustomUserDetails user) {
-        List<Review> reviewList = wishService.getWishReview(user.getUser());
+        List<Review> reviewList = wishService.getWishReview(user.getUserId());
         for(Review review : reviewList){
             System.out.println("찜한리뷰 : "+review.getMvTitle() + "\n" + review.getWriter() + "\n" + review.getContent());
         }
-        return wishService.getWishReview(user.getUser());
+        return wishService.getWishReview(user.getUserId());
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -57,7 +57,7 @@ public class WishController {
     @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/{rvId}")
     public void deleteWishReview(@AuthenticationPrincipal CustomUserDetails user, @PathVariable int rvId) {
-        int result = wishService.deleteWishReview(user.getUser(), rvId);
+        int result = wishService.deleteWishReview(user.getUserId(), rvId);
         if (result <= 0) {
             throw new ResourceNotFoundException("Review not found with id " + rvId);
         }

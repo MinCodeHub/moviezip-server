@@ -23,7 +23,7 @@ public class AuthCheckController {
         String userNameFromToken = jwtutil.extractUsername(jwt); // jwtUtil은 JWT 유틸리티 클래스
 
         // 토큰 유효성 검사
-        if (!jwtutil.validateToken(jwt, customUserDetailsService.loadUserByUsername(userNameFromToken))) {
+        if (!jwtutil.validateToken(jwt)) {
             throw new RuntimeException("Invalid or expired token");  // 적절한 예외 처리
         }
         return true; // 인증 실패

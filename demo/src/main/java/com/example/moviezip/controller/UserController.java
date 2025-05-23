@@ -77,7 +77,7 @@ public class UserController {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Return 401 if user is not authenticated
         }
-        Long userId  = userDetails.getUser(); // CustomUserDetails에서 User 객체 추출
+        Long userId  = userDetails.getUserId(); // CustomUserDetails에서 User 객체 추출
         System.out.println("sss"+userDetails.getUser());
         return ResponseEntity.ok().body(userId);
     }

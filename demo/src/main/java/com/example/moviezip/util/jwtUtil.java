@@ -2,10 +2,7 @@ package com.example.moviezip.util;
 
 import com.example.moviezip.domain.CustomUserDetails;
 import com.example.moviezip.service.CustomUserDetailsService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,80 +24,43 @@ public class jwtUtil {
     private long REFRESH_TOKEN_EXPIRATION;
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    //클레임 추출
-    private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-    }
-
-    //JWT에서 userId 추출
-    public Long extractUserId(String token) {
-        Claims claims = extractAllClaims(token); // JWT에서 모든 claims 가져오기
-        return claims.get("userId", Long.class); // userId 추출 (Long 타입)
-    }
-
-    public List<String> extractRoles(String token) {
-        Claims claims = extractAllClaims(token);  // JWT에서 모든 claims 가져오기
-        return (List<String>) claims.get("roles");  // roles는 이제 List<String> 형태로 저장됨
-    }
-
-    private Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    public String generateToken(UserDetails userDetails) {
-        CustomUserDetails customUser = (CustomUserDetails) userDetails;
-        Map<String, Object> claims = new HashMap<>();
-
-        List<String> roles = customUser.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)  // "ROLE_XXX" 형태의 문자열을 추출
-                .collect(Collectors.toList());
-
-        claims.put("userId", customUser.getUser());
-        claims.put("roles", roles);
-        return createToken(claims, userDetails.getUsername());
-    }
-
-    private String createToken(Map<String, Object> additionalClaims, String subject) {
+    //JWT 토큰 생성
+    public String createAccessToken(Long userId, String username, String role) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("userId", userId);
+        Date now = new Date();
+        claims.put("role", role);
         return Jwts.builder()
-                .setClaims(additionalClaims) // 추가 클레임 설정
-                .setSubject(subject) // 사용자 이름 (subject)
-                .setIssuedAt(new Date(System.currentTimeMillis())) // 발행 시간
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // 서명 알고리즘과 비밀 키 설정
-                .compact(); // JWT 토큰 생성
-    }
-
-    public String generateRefreshToken(UserDetails userDetails) {
-        return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(new Date((new Date()).getTime() + ACCESS_TOKEN_EXPIRATION))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
+
+    //JWT 토큰 생성
+    public String createRefreshToken(Long userId, String username,  String role) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("userId", userId);
+        claims.put("role", role);
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + REFRESH_TOKEN_EXPIRATION))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
     //accessToken 재발급
     public String refreshAccessToken(String refreshToken) {
 
         validateRefreshToken(refreshToken);
 
-        String username = extractUsername(refreshToken);
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-        return generateToken(userDetails);
+        Long userId = extractUserId(refreshToken);
+        String username  = extractUsername(refreshToken);
+        String role = extractRoles(refreshToken);
+
+        return createAccessToken(userId,username,role);
 
     }
 
@@ -127,8 +87,49 @@ public class jwtUtil {
         }
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+
+    public boolean validateToken(String jwtToken) {
+
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwtToken);
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
     }
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    //클레임 추출
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    }
+
+    //JWT에서 userId 추출
+    public Long extractUserId(String token) {
+        Claims claims = extractAllClaims(token); // JWT에서 모든 claims 가져오기
+        return claims.get("userId", Long.class); // userId 추출 (Long 타입)
+    }
+
+    public String extractRoles(String token) {
+        Claims claims = extractAllClaims(token);  // JWT에서 모든 claims 가져오기
+        return (String) claims.get("role");  // roles는 이제 List<String> 형태로 저장됨
+    }
+
+    private Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+
+
 }

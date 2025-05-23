@@ -44,7 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             userDetails = this.userDetailsService.loadUserByUsername(username);
 
             // validateToken 으로 토큰 유효성 검사 후 인증 정보 설정
-            if (jwtutil.validateToken(jwt, userDetails)) {
+            if (jwtutil.validateToken(jwt)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -7,6 +7,7 @@ import com.example.moviezip.util.jwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,39 +32,43 @@ public class RefreshTokenService {
 
     //RefreshToken 저장(이미 있으면 갱신)
     @Transactional
-    public RefreshToken createOrUpdateRefreshToken(UserDetails userDetails, long expirationTimeInSeconds, HttpServletResponse response) {
+    public RefreshToken createOrUpdateRefreshToken(UserDetails userDetails, HttpServletResponse response) {
         CustomUserDetails customUserDetails = (CustomUserDetails) userDetails;
-        Long userId = customUserDetails.getUser();
-        // UserDetails에서 username을 받아서 refresh 토큰을 생성
-        String refreshToken = jwtTokenUtil.generateRefreshToken(userDetails);
+        Long userId = customUserDetails.getUserId();  // 명확한 타입 사용
+        String username = customUserDetails.getUsername();
+        String role = userDetails.getAuthorities().stream()
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse("USER"); // 기본값
+
+        String refreshToken = jwtTokenUtil.createRefreshToken(userId,username,role);
         LocalDateTime expiryDate = LocalDateTime.now().plus(Duration.ofMillis(REFRESH_TOKEN_EXPIRATION));
-        log.info("만료기간:" + expiryDate);
 
-        // 기존 refreshToken이 있는지 확인
-        Optional<RefreshToken> existingToken = refreshTokenRepository.findByUserId(userId);
-        RefreshToken tokenToReturn;
+        RefreshToken token = refreshTokenRepository.findByUserId(userId)
+                .map(existing -> {
+                    existing.updateToken(refreshToken, expiryDate);
+                    return existing;
+                })
+                .orElseGet(() -> RefreshToken.builder()
+                        .userId(userId)
+                        .token(refreshToken)
+                        .expiryDate(expiryDate)
+                        .build());
 
-        if (existingToken.isPresent()) {         // 기존 토큰이 있으면 갱신
-            RefreshToken token = existingToken.get();
-            token.updateToken(refreshToken, expiryDate);
-            tokenToReturn = refreshTokenRepository.save(token);
-        } else {// 기존 토큰이 없으면 새로 생성
-            RefreshToken newRefreshToken = RefreshToken.builder()
-                    .userId(userId)
-                    .token(refreshToken)
-                    .expiryDate(expiryDate)
-                    .build();
-            tokenToReturn = refreshTokenRepository.save(newRefreshToken);
-        }
+        refreshTokenRepository.save(token);
 
-        Cookie cookie = new Cookie("refreshToken", tokenToReturn.getToken());
-        cookie.setHttpOnly(true);    // JavaScript에서 접근 불가
-        cookie.setSecure(true);      // HTTPS 환경에서만 전송되도록 설정 (필요한 경우)
-        cookie.setPath("/");         // 모든 경로에서 사용 가능하도록 설정
-        cookie.setMaxAge((int) REFRESH_TOKEN_EXPIRATION);  // 유효 기간 설정
+        Cookie cookie = new Cookie("refreshToken", token.getToken());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(isProduction()); // 환경 기반 설정 추천
+        cookie.setPath("/");
+        cookie.setMaxAge((int) REFRESH_TOKEN_EXPIRATION);
         response.addCookie(cookie);
-        log.info("쿠키 설정: refreshToken={}, MaxAge={}", tokenToReturn, REFRESH_TOKEN_EXPIRATION);
-        return tokenToReturn;
+
+        return token;
+    }
+
+    private boolean isProduction() {
+        return true; // 환경에 따라 동적으로 결정 (예: prod profile이면 true)
     }
 
     // Refresh Token 검증

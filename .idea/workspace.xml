@@ -4,11 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[feat] SecurityConfig 수정">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[feat] 채팅방 입장 메시지 기능 추가">
+      <change afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/domain/chat/ReadMessagesDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/AuthCheckController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/AuthCheckController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/MovieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/MovieController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/WishController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/WishController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/chat/ChatMessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/chat/ChatMessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/chat/ChatRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/controller/chat/ChatRoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/dao/mongo/chat/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/dao/mongo/chat/ChatMessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/domain/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/domain/CustomUserDetails.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/domain/chat/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/domain/chat/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/filters/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/filters/JwtRequestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/service/RefreshTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/service/RefreshTokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/service/chat/ChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/service/chat/ChatMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/util/FilterChannelInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/util/FilterChannelInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/util/jwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/java/com/example/moviezip/util/jwtUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/demo/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,7 +84,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;D:/4th_grade/1st_semester/SoftwareContest/MovieZip_BE/demo/src/test/java&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/4th_grade/1st_semester/SoftwareContest/MovieZip_BE&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/4th_grade/2st_semester/Movie_Zip/moviezip-front&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -316,14 +329,11 @@
       <workItem from="1738242650187" duration="8965000" />
       <workItem from="1738390536374" duration="6905000" />
       <workItem from="1738471690051" duration="5125000" />
-    </task>
-    <task id="LOCAL-00103" summary="feat: add ChatMessageController #9">
-      <option name="closed" value="true" />
-      <created>1729659777671</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1729659777671</updated>
+      <workItem from="1747962226804" duration="11046000" />
+      <workItem from="1747990359146" duration="3873000" />
+      <workItem from="1748002096937" duration="1064000" />
+      <workItem from="1748009719778" duration="3312000" />
+      <workItem from="1748014436113" duration="2524000" />
     </task>
     <task id="LOCAL-00104" summary="feat: add ChatMessageRepository #9">
       <option name="closed" value="true" />
@@ -709,7 +719,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738395977702</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="[feat] 채팅방 입장 메시지 기능 추가">
+      <option name="closed" value="true" />
+      <created>1747923735652</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1747923735652</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,7 +745,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[feat] 비번 수정, 닉네임 수정 - UserDao 추가" />
     <MESSAGE value="[feat] 비번 수정, 닉네임 수정 - UserMapper 추가" />
     <MESSAGE value="[feat] 비번 수정, 닉네임 수정 - UserMapper.xml 추가" />
     <MESSAGE value="[feat] 비번 수정, 닉네임 수정 - UserServiceImpl 추가" />
@@ -752,7 +769,8 @@
     <MESSAGE value="[feat] JwtRequestFilter 정리 - refreshToken 관련 부분 삭제" />
     <MESSAGE value="[feat] LoginController 수정" />
     <MESSAGE value="[feat] SecurityConfig 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="[feat] SecurityConfig 수정" />
+    <MESSAGE value="[feat] 채팅방 입장 메시지 기능 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat] 채팅방 입장 메시지 기능 추가" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
