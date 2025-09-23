@@ -4,12 +4,9 @@ import com.example.moviezip.domain.Movie;
 import com.example.moviezip.service.CustomUserDetailsService;
 import com.example.moviezip.service.MovieImpl;
 import com.example.moviezip.service.WishImpl;
-import com.example.moviezip.service.recommend.MovieRecommenderService;
 import com.example.moviezip.util.jwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 

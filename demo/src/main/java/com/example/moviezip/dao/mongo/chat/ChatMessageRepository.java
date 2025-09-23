@@ -13,4 +13,8 @@ import java.util.List;
 public interface ChatMessageRepository extends MongoRepository<ChatMessage, String> {
     // 특정 채팅방의 메시지를 조회하는 메소드
     List<ChatMessage> findByChatRoomId(String chatRoomId);
+
+    //채팅방 입장 시 안 읽은 메시지 목록 조회
+    List<ChatMessage> findByChatRoomIdAndUnreadUserIdsContains(String chatRoomId, Long userId);
+
 }

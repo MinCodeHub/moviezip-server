@@ -107,6 +107,10 @@
         WHERE USERID = #{userId}
     </select>
 
+    <select id="getAllUserIds" resultType="long">
+        SELECT USERID
+        FROM USER_TABLE
+    </select>
 
 
 

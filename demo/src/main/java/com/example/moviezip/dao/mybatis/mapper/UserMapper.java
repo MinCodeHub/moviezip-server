@@ -58,4 +58,7 @@ public interface UserMapper {
 
     //어드민 아이디 가져오기
     Long findAdminId();
+
+    //모든 유저아이디 가져오기
+    List<Long> getAllUserIds();
 }

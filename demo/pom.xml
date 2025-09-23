@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.18</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
+
     <groupId>com.example</groupId>
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>moviezip</name>
     <description>Demo project for Spring Boot</description>
+
     <properties>
         <java.version>17</java.version>
         <mybatis-spring-boot-starter.version>2.3.0</mybatis-spring-boot-starter.version>
+        <!-- 필요 시 바꾸세요 -->
+        <hadoop.home.dir>C:\hadoop</hadoop.home.dir>
+        <!-- Surefire 버전은 JDK17/모듈 옵션과 궁합 좋은 3.x 권장 -->
+        <maven.surefire.version>3.2.5</maven.surefire.version>
     </properties>
+
     <dependencies>
-        <!-- Spring Boot Starter dependencies -->
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -37,41 +46,29 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-        <!-- Spring Boot Starter Test dependency -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!-- Spring Boot Starter Security Test dependency -->
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <version>5.5.2</version>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <!-- MySQL Connector dependency -->
-        <!--        <dependency>-->
-        <!--            <groupId>mysql</groupId>-->
-        <!--            <artifactId>mysql-connector-java</artifactId>-->
-        <!--            <scope>runtime</scope>-->
-        <!--        </dependency>-->
-        <!-- Lombok dependency -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-        <!-- MyBatis Spring Boot Starter dependency -->
+
+        <!-- MyBatis -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis-spring-boot-starter.version}</version>
         </dependency>
-        <!-- Apache Spark dependencies -->
+
+        <!-- Spark -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.12</artifactId>
@@ -82,95 +79,104 @@
             <artifactId>spark-mllib_2.12</artifactId>
             <version>3.4.1</version>
         </dependency>
-        <!-- Spring Security dependencies -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>5.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <version>5.5.2</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- Oracle JDBC dependency -->
+
+        <!-- DB / Validation -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc8</artifactId>
             <version>19.8.0.0</version>
         </dependency>
-        <!-- Spring Boot Starter Thymeleaf dependency -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-websocket</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
-<!--        </dependency>-->
-
-        <!-- WebSocket,Redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.2.5.Final</version>
         </dependency>
 
-
-        <!-- MongoDB Spring Data -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-
-        <!-- JJWT API:  JWT 관련 작업을 위한 인터페이스와 API 정의 -->
+        <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
         </dependency>
-
-        <!-- JJWT Impl: 실제 JWT 생성 및 검증 기능 구현 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <version>0.11.5</version>
+            <scope>runtime</scope>
         </dependency>
-
-        <!-- JJWT Jackson: Jackson 라이브러리와 통합되어 JWT를 JSON으로 직렬화하거나 역직렬화하는 기능 제공 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
+            <scope>runtime</scope>
         </dependency>
 
-
+        <!-- Lombok -->
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.2.5.Final</version> <!-- Spring Boot 2.x 호환 -->
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
 
+        <!-- Security config/test: 버전 명시 제거(부트 BOM이 관리) -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <!-- JUnit4 혼선 방지: 필요 시 vintage를 따로 넣으세요. 기본은 JUnit5 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>4.5.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ⚠️ 제거: junit:junit (JUnit4) - 섞이면 러너 충돌/혼선 -->
+        <!-- ⚠️ 제거: spring-boot-starter-test 중복, spring-security-test 중복, 버전 강제 지정 -->
     </dependencies>
+
     <build>
         <plugins>
-            <!-- Spring Boot Maven Plugin -->
+            <!-- Spark + JDK17 모듈 접근 & Hadoop 홈 전달 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <!-- JPMS로 인한 접근 이슈 해결 -->
+                    <argLine>
+                        --add-exports=java.base/sun.nio.ch=ALL-UNNAMED
+                        --add-opens=java.base/java.nio=ALL-UNNAMED
+                        -Dhadoop.home.dir=${hadoop.home.dir}
+                    </argLine>
+                    <!-- JUnit5 사용(기본값이긴 하지만 명시해도 좋음) -->
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -185,14 +191,13 @@
             </plugin>
         </plugins>
     </build>
+
     <repositories>
         <repository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
             <url>https://repo.spring.io/snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
+            <releases><enabled>false</enabled></releases>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -200,9 +205,7 @@
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
             <url>https://repo.spring.io/snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
+            <releases><enabled>false</enabled></releases>
         </pluginRepository>
     </pluginRepositories>
 </project>

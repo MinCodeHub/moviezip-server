@@ -144,5 +144,10 @@ public class UserServiceImpl implements UserService {
         return mybatisUserDao.findAdminId();
     }
 
+    @Override
+    public List<Long> getAllUserIds() {
+        return mybatisUserDao.getAllUserIds();
+    }
+
 
 }

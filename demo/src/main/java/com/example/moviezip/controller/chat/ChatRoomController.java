@@ -35,15 +35,15 @@ public class ChatRoomController {
         String userNameFromToken = jwtUtil.extractUsername(jwt); // jwtUtil은 JWT 유틸리티 클래스
 
         // 토큰 유효성 검사
-        if (!jwtUtil.validateToken(jwt, customUserDetailsService.loadUserByUsername(userNameFromToken))) {
+        if (!jwtUtil.validateToken(jwt)) {
             throw new RuntimeException("Invalid or expired token");
         }
         // userId 및 roles 추출
         Long userId = jwtUtil.extractUserId(jwt);
-        List<String> roles = jwtUtil.extractRoles(jwt);
+        String role = jwtUtil.extractRoles(jwt);
 
         List<ChatRoom> chatRooms;
-        if (roles.contains("ROLE_ADMIN")) {  // 관리자인지 확인
+        if (role.equals("ROLE_ADMIN")) {  // 관리자인지 확인
             chatRooms = chatRoomService.getAllChatRooms();
         } else {
             chatRooms = chatRoomService.getUserChatRooms(userId);

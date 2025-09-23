@@ -7,6 +7,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -27,13 +30,14 @@ public class ChatMessage {
     private String content; // 메시지 내용
     private LocalDateTime timestamp; // 메시지 생성 시간
     private String chatRoomId; // 채팅방 ID (ManyToOne 대신 ID 참조)
-
-    public ChatMessage(MessageType type, Long userId, String sender, String content, String chatRoomId) {
+    private List<Long> unreadUserIds = new ArrayList<>(); //읽지 않은 유저들의 ID 목록 (이 메시지를 아직 읽지 않은 유저들)
+    public ChatMessage(MessageType type, Long userId, String sender, String content, String chatRoomId, List<Long> unreadUserIds) {
         this.type = type;
         this.userId = userId;
         this.sender = sender;
         this.content = content;
         this.timestamp = LocalDateTime.now();
         this.chatRoomId = chatRoomId;
+        this.unreadUserIds = unreadUserIds;
     }
 }

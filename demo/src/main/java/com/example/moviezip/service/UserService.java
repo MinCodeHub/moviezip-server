@@ -39,4 +39,7 @@ public interface UserService {
     List<String> findInterest2(Long id);
 
     Long findAdminId();
+
+    //모든 사용자들의 Long타입 id가져오기
+    List<Long> getAllUserIds();
 }

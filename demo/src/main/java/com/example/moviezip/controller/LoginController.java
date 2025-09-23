@@ -83,15 +83,8 @@ public class LoginController {
             return ResponseEntity.ok(new AuthenticationResponse(accessToken));
 
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            throw new Exception("올바르지 않은 아이디와 비밀번호", e);
         }
-
-//        final UserDetails userDetails = userDetailsService
-//                .loadUserByUsername(authenticationRequest.getUsername());
-        // 인증된 Authentication 객체에서 UserDetails 가져오기
-
-        // accessToken은 JSON 응답으로 보내고
-
     }
 
     @PostMapping("/refresh")

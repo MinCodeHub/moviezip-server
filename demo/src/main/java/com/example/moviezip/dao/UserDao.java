@@ -46,4 +46,6 @@ public interface UserDao {
 
     //어드민 아이디 가져오기
     Long findAdminId() throws DataAccessException;
+
+    List<Long> getAllUserIds() throws  DataAccessException;
 }

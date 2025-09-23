@@ -1,5 +1,4 @@
 package com.example.moviezip.dao.mybatis;
-import com.example.moviezip.domain.Interest;
 import com.example.moviezip.dao.UserDao;
 import com.example.moviezip.dao.mybatis.mapper.UserMapper;
 import com.example.moviezip.domain.User;
@@ -128,5 +127,10 @@ public class MybatisUserDao implements UserDao {
     @Override
     public Long findAdminId() throws DataAccessException{
         return userMapper.findAdminId();
+    }
+
+    @Override
+    public List<Long> getAllUserIds() throws  DataAccessException{
+        return userMapper.getAllUserIds();
     }
 }
