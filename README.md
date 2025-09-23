@@ -101,22 +101,67 @@ Oracle 기반으로 기존 설계되었던 데이터베이스와의 직접적인
 #### 🧩 Problem: 영화 추천 API가 너무 느리다
 
 - 기존 추천 API /main/recommend는 Spark ALS 기반 연산을 요청마다 수행함
-- 추천 알고리즘 실행 시간: 약 15초 이상
-- 사용자가 매번 15초 이상 기다려야 하는 심각한 UX 문제 발생
+- 평균 응답 18.4초 → 사용자가 매번 기다려야 하는 심각한 UX 문제
+- 원인: ALS 연산(학습/예측)이 CPU·I/O를 많이 사용하며, 매 요청 시 재계산하는 구조
 <img width="548" height="137" alt="image" src="https://github.com/user-attachments/assets/5e0ed2d3-9c2f-40f2-9c6f-8ae719ccd2ca" />
 
-#### ⚡️ Solution: Redis 캐시 도입으로 속도향상된 추천 결과 제공
+#### ⚡️ Solution: Redis 캐시 + Cache-aside 패턴 도입
+
+첫 요청: 캐시 MISS → ALS로 추천 계산 → Redis 저장(24h TTL)
+
+이후 요청: 캐시 HIT → Redis에서 즉시 응답
 
 | 항목       | 캐시 미적용           | Redis 캐시 적용    |
 | -------- | ---------------- | -------------- |
-| 평균 응답 시간 | 14,876ms (\~15초) | 1ms            |
-| 속도 향상    | -                | 🔥 **15,000배** |
+| 평균 응답 시간 | 18,426ms(~18초) |3ms            |
+| 속도 향상    | -                | 🔥 **6000배** |
 
-매번 무거운 Spark 연산 대신, 한 번 계산한 결과를 Redis에 저장하고 다음부터는 즉시 반환
+- 키 전략: recommend:{userId}
 
-| 캐시 적용 전       | 캐시 적용 후           | 
-| -------- | ---------------- | 
-|<img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/b1aa5298-95c9-44d1-86aa-9ef0f527ce39" /> |<img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/a71434f3-0cf9-4ebf-affd-c9e1058756c4" /> |
+- TTL: 24시간 (데이터 신선성 확보 + 과도한 재계산 방지)
+
+- 패턴: Cache-aside (애플리케이션이 캐시를 직접 관리)
+
+#### 🧱 구조
+
+1. Controller → MovieCacheRecommenderService#getRecommendations(userId) 호출
+
+2. Redis 조회(HIT면 즉시 반환)
+
+3. MISS면 Spark ALS로 계산 → JSON 직렬화해 Redis에 저장(TTL=1day)
+
+4. 이후 동일 사용자 요청은 캐시에서 반환(3ms)
+
+#### 💡 핵심 코드 (Cache-aside)
+```
+    public List<String> getRecommendations(int userId) {
+        String key = "recommend:" + userId;
+        String cachedJson = (String) redisTemplate.opsForValue().get(key);
+
+        if (cachedJson != null) {
+            System.out.println("[CACHE HIT] " + key);
+            try {
+                return objectMapper.readValue(cachedJson, List.class);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("JSON 파싱 실패", e);
+            }
+        }
+        System.out.println("[CACHE MISS] " + key);
+        // 미스 → 계산 후 JSON 저장
+        List<String> result = recommendMovies(userId);
+        try {
+            redisTemplate.opsForValue().set(key, objectMapper.writeValueAsString(result), 1, TimeUnit.DAYS);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("JSON 직렬화 실패", e);
+        }
+        return result;
+    }
+}
+```
+
+
+<img width="594" height="197" alt="image" src="https://github.com/user-attachments/assets/9f7fc298-a2d0-4c8d-985b-3dd31c71cb2f" />
+
 
 
 #### 🧠 Spark + JDK 호환 문제 해결
