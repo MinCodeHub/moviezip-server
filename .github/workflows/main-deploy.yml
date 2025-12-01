@@ -55,18 +55,34 @@ jobs:
 
       # 6. zip 파일 생성
       - name: Make zip file
-        working-directory: moviezip-server
         run: |
+          # repo root에서 moviezip-server로 이동
+          cd moviezip-server
+      
+          # deploy 디렉토리 생성
           mkdir -p deploy
-          cp docker-compose-blue.yml deploy/
-          cp docker-compose-green.yml deploy/
-          cp appspec.yml deploy/
-          cp Dockerfile deploy/
-          cp scripts/*.sh deploy/
-          cp deploy.sh deploy/
-          cp build/libs/*.jar deploy/ || true
-          zip -r -qq ../spring-build.zip deploy
-
+      
+          # 파일 복사 (파일명이 하이픈인지 점인지 정확히 확인)
+          cp docker-compose-blue.yml deploy/ || cp docker-compose-blue.yml deploy/ || true
+          cp docker-compose-green.yml deploy/ || true
+          cp appspec.yml deploy/ || true
+          cp Dockerfile deploy/ || true
+          cp scripts/*.sh deploy/ || true
+          cp deploy.sh deploy/ || true
+      
+          # Maven artifact (demo/target/*.jar) 복사 — 없으면 실패하도록 설정
+          if [ -d "demo/target" ]; then
+            cp demo/target/*.jar deploy/ || (echo "No jar found in demo/target" && exit 1)
+          else
+            echo "demo/target not found; did build step run?" && exit 1
+          fi
+      
+          # 실행 권한 부여(필요시)
+          chmod -R a+x deploy/*.sh || true
+      
+          # zip 생성: -j 옵션은 경로 제거 (모든 파일을 zip 루트에 넣음)
+          zip -r -qq -j ../spring-build.zip ./deploy
+          echo "== spring-build.zip created at repo root =="
       # 7. AWS 자격증명 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -79,7 +95,6 @@ jobs:
       - name: Upload to S3
         id: s3_upload
         run: |
-          cd demo
           aws s3 cp ./spring-build.zip s3://${S3_BUCKET}/spring-build-${{ github.run_id }}.zip --region ${AWS_REGION}
           echo "s3_key=spring-build-${{ github.run_id }}.zip" >> $GITHUB_OUTPUT
 
