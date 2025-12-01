@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] deploy 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -377,22 +378,6 @@
       <workItem from="1764514921334" duration="3690000" />
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
-    </task>
-    <task id="LOCAL-00122" summary="[feat] myBatisUserDao 추가">
-      <option name="closed" value="true" />
-      <created>1730018282716</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1730018282717</updated>
-    </task>
-    <task id="LOCAL-00123" summary="[feat] 비번 수정, 닉네임 수정 - UserController 추가">
-      <option name="closed" value="true" />
-      <created>1730018322789</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1730018322789</updated>
     </task>
     <task id="LOCAL-00124" summary="[feat] 비번 수정, 닉네임 수정 - UserDao 추가">
       <option name="closed" value="true" />
@@ -770,7 +755,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764598867473</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="[infra] deploy 수정">
+      <option name="closed" value="true" />
+      <created>1764599201515</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1764599201515</updated>
+    </task>
+    <task id="LOCAL-00172" summary="[infra] deploy 수정">
+      <option name="closed" value="true" />
+      <created>1764599393074</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1764599393074</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
