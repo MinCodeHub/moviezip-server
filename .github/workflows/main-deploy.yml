@@ -57,26 +57,31 @@ jobs:
       - name: Make zip file
         run: |
           cd moviezip-server
+
+          # deploy 디렉토리 생성
           mkdir -p deploy
 
-          # deploy.sh, docker-compose, Dockerfile, scripts 복사
-          cp deploy.sh deploy/ || true
+          # 필요한 파일 복사
           cp docker-compose-blue.yml deploy/ || true
           cp docker-compose-green.yml deploy/ || true
+          cp appspec.yml deploy/ || true
           cp Dockerfile deploy/ || true
-          cp -r scripts/ deploy/ || true
-          cp demo/target/*.jar deploy/ || (echo "No jar found" && exit 1)
+          cp scripts/*.sh deploy/ || true
+          cp deploy.sh deploy/ || true
+
+          # Maven 빌드 산출물 복사
+          if [ -d "demo/target" ]; then
+            cp demo/target/*.jar deploy/ || (echo "No jar found in demo/target" && exit 1)
+          else
+            echo "demo/target not found; did build step run?" && exit 1
+          fi
 
           # 실행 권한 부여
           chmod -R a+x deploy/*.sh || true
 
-          # 생성된 파일 확인 (디버그)
-          echo "=== deploy folder content ==="
-          ls -la deploy
-
-          # zip 생성
+          # zip 생성 (deploy 안의 모든 파일 포함, 경로 제거)
           zip -r -qq -j ../spring-build.zip deploy
-          echo "== spring-build.zip created at repo root =="
+          echo "== spring-build.zip created =="
           ls -la ../spring-build.zip
 
       # 7. AWS 자격증명 설정
