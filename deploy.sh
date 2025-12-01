@@ -18,7 +18,7 @@ if [ -z "$EXIST_BLUE" ]; then
     # Blue 컨테이너 실행, 로그 파일로 출력
     docker run -d --name ${DOCKER_APP_NAME}-blue -p 8080:8080 \
         -v $(pwd)/${JAR_FILE}:/app/${JAR_FILE} \
-        openjdk:17 java -jar /app/${JAR_FILE} \
+        openjdk:17-jdk java -jar /app/${JAR_FILE} \
         >> ${LOG_DIR}/blue.log 2>&1
     sleep 15
     # Green 컨테이너 제거
@@ -28,7 +28,7 @@ else
     docker rm -f ${DOCKER_APP_NAME}-green || true
     docker run -d --name ${DOCKER_APP_NAME}-green -p 8080:8080 \
         -v $(pwd)/${JAR_FILE}:/app/${JAR_FILE} \
-        openjdk:17 java -jar /app/${JAR_FILE} \
+        openjdk:17-jdk java -jar /app/${JAR_FILE} \
         >> ${LOG_DIR}/green.log 2>&1
     sleep 15
     docker rm -f ${DOCKER_APP_NAME}-blue || true
