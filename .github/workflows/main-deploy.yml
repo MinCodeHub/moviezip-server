@@ -40,20 +40,24 @@ jobs:
         env:
           APPLICATION: ${{ secrets.APPLICATION_PROD }}
         run: |
+          cd demo   # pom.xml 있는 폴더로 이동
           mkdir -p src/main/resources
           printf '%s' "$APPLICATION" > src/main/resources/application-prod.yml
           echo "== application-prod.yml created =="
 
       # 5. Maven 빌드
       - name: Build with Maven
-        run: mvn clean package -DskipTests
+        run: |
+          cd demo   # pom.xml 있는 폴더로 이동
+          mvn clean package -DskipTests
 
       # 6. zip 파일 생성
       - name: Make zip file
         run: |
+          cd demo
           mkdir -p deploy
           cp ./target/*.jar ./deploy/
-          zip -r -qq -j ./spring-build.zip ./deploy
+          zip -r -qq ./spring-build.zip ./deploy
           echo "== zip file created =="
 
       # 7. AWS 자격증명 설정
@@ -67,4 +71,5 @@ jobs:
       # 8. S3 업로드
       - name: Upload to S3
         run: |
+          cd demo
           aws s3 cp ./spring-build.zip s3://${S3_BUCKET}/spring-build-${{ github.run_id }}.zip --region ${AWS_REGION}
