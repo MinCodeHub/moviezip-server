@@ -20,7 +20,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # 2. JDK 17 설치 (POM 기준)
+      # 2. JDK 17 설치
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -42,7 +42,7 @@ jobs:
         env:
           APPLICATION: ${{ secrets.APPLICATION_PROD }}
         run: |
-          cd demo   # pom.xml 있는 폴더로 이동
+          cd demo
           mkdir -p src/main/resources
           printf '%s' "$APPLICATION" > src/main/resources/application-prod.yml
           echo "== application-prod.yml created =="
@@ -78,13 +78,12 @@ jobs:
           aws s3 cp ./spring-build.zip s3://${S3_BUCKET}/spring-build-${{ github.run_id }}.zip --region ${AWS_REGION}
           echo "s3_key=spring-build-${{ github.run_id }}.zip" >> $GITHUB_OUTPUT
 
-      # 9. CodeDeploy 배포
+      # 9. CodeDeploy 배포 (AWS CLI 방식)
       - name: Deploy via CodeDeploy
-        uses: aws-actions/aws-code-deploy@v1
-        with:
-          application-name: ${{ env.CODEDEPLOY_APP_NAME }}
-          deployment-group: ${{ env.CODEDEPLOY_DEPLOYMENT_GROUP }}
-          bucket: ${{ env.S3_BUCKET }}
-          key: ${{ steps.s3_upload.outputs.s3_key }}
-          bundle-type: zip
-          region: ${{ env.AWS_REGION }}
+        run: |
+          aws deploy create-deployment \
+            --application-name ${{ env.CODEDEPLOY_APP_NAME }} \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name ${{ env.CODEDEPLOY_DEPLOYMENT_GROUP }} \
+            --s3-location bucket=${{ env.S3_BUCKET }},bundleType=zip,key=${{ steps.s3_upload.outputs.s3_key }} \
+            --region ${{ env.AWS_REGION }}
