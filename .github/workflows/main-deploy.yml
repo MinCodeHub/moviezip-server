@@ -55,16 +55,17 @@ jobs:
 
       # 6. zip 파일 생성
       - name: Make zip file
+        working-directory: moviezip-server
         run: |
           mkdir -p deploy
-          cp ./docker-compose-blue.yml ./deploy/
-          cp ./docker-compose-green.yml ./deploy/
-          cp ./appspec.yml ./deploy/
-          cp ./Dockerfile ./deploy/
-          cp ./scripts/*.sh ./deploy/
-          cp ./build/libs/*.jar ./deploy/
-          zip -r -qq ./spring-build.zip ./deploy
-          echo "== zip file created =="
+          cp docker-compose-blue.yml deploy/
+          cp docker-compose-green.yml deploy/
+          cp appspec.yml deploy/
+          cp Dockerfile deploy/
+          cp scripts/*.sh deploy/
+          cp deploy.sh deploy/
+          cp build/libs/*.jar deploy/ || true
+          zip -r -qq ../spring-build.zip deploy
 
       # 7. AWS 자격증명 설정
       - name: Configure AWS credentials
