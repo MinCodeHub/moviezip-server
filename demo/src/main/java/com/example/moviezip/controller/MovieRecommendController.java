@@ -5,6 +5,7 @@ import com.example.moviezip.service.MovieImpl;
 import com.example.moviezip.service.recommend.MovieCacheRecommenderService;
 import com.example.moviezip.service.recommend.MovieRecommenderService;
 import com.example.moviezip.util.jwtUtil;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,14 +17,16 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
+
 @RestController
 @RequestMapping("/")
 public class MovieRecommendController {
-    private MovieCacheRecommenderService movieCacheRecommenderService;
-    private MovieRecommenderService recommenderService;
-    private MovieImpl movieService;
-    private List<String> recommendedMovies; // 추천 영화 저장 변수
-    private long lastRecommendationTime; // 마지막 추천 시간 저장 변수
+    private final MovieCacheRecommenderService movieCacheRecommenderService;
+    private final MovieRecommenderService recommenderService;
+    private final MovieImpl movieService;
+
+    private List<String> recommendedMovies = new ArrayList<>();
+    private long lastRecommendationTime = 0;
 
     @Autowired
     private jwtUtil jwtUtil;
@@ -32,11 +35,13 @@ public class MovieRecommendController {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
-    public void setMovieRecommend(MovieRecommenderService recommenderService, MovieImpl movieService) {
+    public MovieRecommendController(
+            MovieCacheRecommenderService movieCacheRecommenderService,
+            MovieRecommenderService recommenderService,
+            MovieImpl movieService) {
+        this.movieCacheRecommenderService = movieCacheRecommenderService;
         this.recommenderService = recommenderService;
         this.movieService = movieService;
-        this.recommendedMovies = new ArrayList<>();
-        this.lastRecommendationTime = 0;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -61,7 +66,7 @@ public class MovieRecommendController {
         // 하루가 지났는지 확인 (24시간 = 86400000 milliseconds)
         if (currentTime - lastRecommendationTime > 86400000) {
             // MovieRecommender 실행
-            recommendedMovies = recommenderService.recommendMovies(userId);
+            recommendedMovies = MovieRecommenderService.recommendMovies(userId);
             lastRecommendationTime = currentTime; // 마지막 추천 시간 업데이트
         }
 
@@ -117,7 +122,7 @@ public class MovieRecommendController {
 
         if (cachedRecommendations == null) {
             // 캐시가 없으면 추천 알고리즘 직접 실행 후 캐시에 저장
-            cachedRecommendations = movieCacheRecommenderService.recommendMovies(userId);
+            cachedRecommendations = MovieCacheRecommenderService.recommendMovies(userId);
             redisTemplate.opsForValue().set("recommend:" + userId, cachedRecommendations, 1, TimeUnit.DAYS);
         }   List<Movie> movieList = new ArrayList<>();
 

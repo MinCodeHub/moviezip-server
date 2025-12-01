@@ -109,8 +109,13 @@ public class MovieController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("movie/{mvId}/wish/add")
-    public int insertMyMovieWish(@PathVariable int mvId, @RequestParam int userId) throws Exception {
+    public int insertMyMovieWish(@PathVariable int mvId, @RequestParam int userId,@RequestHeader("Authorization") String token) throws Exception {
         System.out.println("Entering getMovie method with mvId: " + mvId);
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        Long userIdFromToken = jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         int ch = wishService.saveWishMovie(userId, mvId);
         if(ch == 1){
             System.out.println("찜 성공" + ch);
@@ -121,8 +126,13 @@ public class MovieController {
     }
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("movie/{mvId}/wish/delete")
-    public int deleteMyMovieWish(@PathVariable int mvId, @RequestParam int userId) throws Exception {
+    public int deleteMyMovieWish(@PathVariable int mvId, @RequestParam int userId,@RequestHeader("Authorization") String token) throws Exception {
         System.out.println("Entering getMovie method with mvId: " + mvId);
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        Long userIdFromToken = jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         int ch = wishService.deleteWishMovie(userId, mvId);
         if(ch == 1){
             System.out.println("찜 삭제 성공" +ch);

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: moviezip-redis
+    ports:
+      - "6379:6379"
+
+  mongo:
+    image: mongo:4.4
+    container_name: moviezip-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - C:/MongoDB/data/db:/data/db
+    command: ["--bind_ip_all"]  # 외부 접속 허용

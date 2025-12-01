@@ -20,14 +20,13 @@
       <introspection-level>3</introspection-level>
       <load-sources>user_and_system_sources</load-sources>
     </data-source>
-    <data-source name="movieZip@localhost" uuid="b20b8ef8-314d-4490-b785-2b571dd49b7c">
-      <database-info product="Mongo DB" version="8.0.0" jdbc-version="4.2" driver-name="MongoDB JDBC Driver" driver-version="1.20" dbms="MONGO" exact-version="8.0.0" exact-driver-version="1.20" />
+    <data-source name="@localhost" uuid="70fddc26-abba-4247-802e-76ad20416642">
+      <database-info product="Mongo DB" version="8.2.0" jdbc-version="4.2" driver-name="MongoDB JDBC Driver" driver-version="1.20" dbms="MONGO" exact-version="8.2.0" exact-driver-version="1.20" />
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
-      <user-name>moviezip</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="schema" negative="1" />
+          <node kind="schema" qname="movieZip" />
         </introspection-scope>
       </schema-mapping>
     </data-source>

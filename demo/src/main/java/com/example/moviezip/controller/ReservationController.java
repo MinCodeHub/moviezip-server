@@ -6,6 +6,7 @@ import com.example.moviezip.domain.redis.SeatLockUpdate;
 import com.example.moviezip.service.MovieImpl;
 import com.example.moviezip.service.ReservationImpl;
 import com.example.moviezip.service.TheaterImpl;
+import com.example.moviezip.util.jwtUtil;
 import org.apache.hadoop.yarn.api.records.ReservationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,7 +28,8 @@ public class ReservationController {
     private TheaterImpl theaterImpl;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
+    @Autowired
+    private jwtUtil jwtUtil;
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
     @Autowired
@@ -38,8 +40,12 @@ public class ReservationController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("movie/reserve")
-    public int insertReserve(@RequestBody Reservation request) throws Exception {
+    public int insertReserve(@RequestBody Reservation request,@RequestHeader("Authorization") String token) throws Exception {
         System.out.println("Entering getMovie method with mvId: " + request);
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
 
         System.out.println("아이디사용자" + request.getId());
         Reservation reservation = new Reservation(
@@ -88,7 +94,12 @@ public class ReservationController {
     }
 
     @GetMapping("user/mypage")
-    public List<Reservation> getReservationById(@RequestParam Long userId) throws Exception {
+    public List<Reservation> getReservationById(@RequestParam Long userId,@RequestHeader("Authorization") String token) throws Exception {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         List<Reservation> reservations = reservationImpl.getReservationById(userId);
         System.out.println("아이디사용자" + userId);
         for (Reservation res : reservations) {
@@ -101,10 +112,15 @@ public class ReservationController {
     }
     @GetMapping("/movie/reservedSeats/{mvId}")
     public List<String> getReservedSeats(
+            @RequestHeader("Authorization") String token,
             @PathVariable String mvId,
             @RequestParam String region,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date date,
             @RequestParam String time) {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
 
         Long theaterId= theaterImpl.getTheaterId(region);
 

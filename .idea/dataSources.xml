@@ -15,15 +15,14 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="movieZip@localhost" uuid="b20b8ef8-314d-4490-b785-2b571dd49b7c">
-      <driver-ref>mongo</driver-ref>
+    <data-source source="LOCAL" name="@localhost" uuid="70fddc26-abba-4247-802e-76ad20416642">
+      <driver-ref>mongo.4</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb://localhost:27017/movieZip</jdbc-url>
+      <jdbc-url>mongodb://localhost:27017</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
-        <property name="com.intellij.clouds.kubernetes.db.resource.type" value="Deployment" />
         <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>

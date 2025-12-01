@@ -28,9 +28,9 @@ public class ChatMessageService {
         //Redis에서 채팅방 유저 리스트 조회
         Set<String> userIds = redisTemplate.opsForSet().members("CHAT_ROOM:"+ roomId);
         List<Long> unreadUserIds = userIds.stream()
-                        .map(Long::parseLong)
-                                .filter(id -> !id.equals(message.getUserId()))//보낸 사람은 제외
-                                        .collect(Collectors.toList());
+                .map(Long::parseLong)
+                .filter(id -> !id.equals(message.getUserId()))//보낸 사람은 제외
+                .collect(Collectors.toList());
         message.setUnreadUserIds(unreadUserIds);
 
         chatMessageRepository.save(message);

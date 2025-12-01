@@ -5,6 +5,7 @@ import com.example.moviezip.domain.User;
 import com.example.moviezip.service.ReviewImpl;
 import com.example.moviezip.service.UserService;
 import com.example.moviezip.service.UserServiceImpl;
+import com.example.moviezip.util.jwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,8 @@ public class ReviewController {
 
     private final ReviewImpl reviewImpl;
     private final UserService userService;
-
+    @Autowired
+    private jwtUtil jwtUtil;
     @Autowired
     public ReviewController(ReviewImpl reviewImpl, UserService userService) {
         this.reviewImpl = reviewImpl;
@@ -26,7 +28,12 @@ public class ReviewController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("movie/{mvId}/regReview")
-    public void insertMyReview(@RequestBody Review review, @PathVariable Long mvId) {
+    public void insertMyReview(@RequestHeader("Authorization") String token,@RequestBody Review review, @PathVariable Long mvId) {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         try {
             User user = userService.getUserById(review.getWriter());
             String wrtier = user.getUserId();
@@ -43,7 +50,12 @@ public class ReviewController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("wish/myReviewList")
-    public List<Review> getMyReviewList(@RequestParam String userId) {
+    public List<Review> getMyReviewList(@RequestHeader("Authorization") String token,@RequestParam String userId) {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         User user = userService.getUserById(userId);
         String wrtier = user.getUserId();
 
@@ -61,8 +73,13 @@ public class ReviewController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("movie/{mvId}/critics")
-    public List<Review> getCriticsReview(@PathVariable int mvId) throws Exception {
+    public List<Review> getCriticsReview(@RequestHeader("Authorization") String token,@PathVariable int mvId) throws Exception {
         System.out.println("Entering getMovie method with mvId: " + mvId);
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         List<Review> rv = reviewImpl.getCriticReviews(mvId);
 
         for (Review r : rv) {
@@ -75,7 +92,12 @@ public class ReviewController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("wish/myReviewList/ReviewBoxDetail/{rvId}")
-    public Review getReviewDetail(@PathVariable int rvId) throws Exception {
+    public Review getReviewDetail(@RequestHeader("Authorization") String token,@PathVariable int rvId) throws Exception {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         System.out.print(rvId);
         Review rv = reviewImpl.getReviewDetail(rvId);
         System.out.println("리뷰 상세 정보:" + rv.getContent());
@@ -84,7 +106,12 @@ public class ReviewController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/wish/MyReviewBoxUpdate/{rvId}")
-    public int updateReview(@PathVariable int rvId, @RequestBody Review rv) throws Exception {
+    public int updateReview(@RequestHeader("Authorization") String token,@PathVariable int rvId, @RequestBody Review rv) throws Exception {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         int cnt = reviewImpl.updateReview(rv);
         System.out.println("리뷰 수정 결과:" + rv.getContent());
         return cnt;
@@ -92,7 +119,12 @@ public class ReviewController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("wish/myReviewList/delete")
-    public void deleteReview(@RequestParam int rvId) throws Exception {
+    public void deleteReview(@RequestHeader("Authorization") String token,@RequestParam int rvId) throws Exception {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
+
         System.out.println("삭제");
         reviewImpl.deleteReview(rvId);
     }

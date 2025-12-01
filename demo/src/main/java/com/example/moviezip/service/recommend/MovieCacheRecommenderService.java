@@ -39,7 +39,7 @@ public class MovieCacheRecommenderService {
 
         JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
 
-        JavaRDD<String> data = jsc.textFile("./src/main/resources/csv/rating.csv");
+        JavaRDD<String> data = jsc.textFile("./demo/src/main/resources/csv/rating.csv");
 
         JavaRDD<String> filteredData = data.filter(line -> !line.startsWith("MOVIE_TITLE"));
 

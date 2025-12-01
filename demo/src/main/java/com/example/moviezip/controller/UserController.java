@@ -84,10 +84,14 @@ public class UserController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/addInterest")
-    public ResponseEntity<Void> addInterest(@RequestBody InterestDTO interestDTO) {
+    public ResponseEntity<Void> addInterest(@RequestBody InterestDTO interestDTO,@RequestHeader("Authorization") String token) {
         if (interestDTO.getUserId() == null || interestDTO.getGenre() == null) {
             return ResponseEntity.badRequest().build();
         }
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        Long userIdFromToken = jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
 
         userService.addInterest(interestDTO.getUserId(), interestDTO.getGenre());
         return ResponseEntity.ok().build();

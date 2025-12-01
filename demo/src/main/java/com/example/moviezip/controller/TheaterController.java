@@ -2,6 +2,7 @@ package com.example.moviezip.controller;
 
 import com.example.moviezip.domain.*;
 import com.example.moviezip.service.TheaterImpl;
+import com.example.moviezip.util.jwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,14 @@ import java.util.List;
 public class TheaterController {
     @Autowired
     private TheaterImpl theater;
-
+    @Autowired
+    private jwtUtil jwtUtil;
     @GetMapping("/theater/location/{locationId}")
-    public List<Theater> getTheaterByLocation(@PathVariable int locationId) {
+    public List<Theater> getTheaterByLocation(@RequestHeader("Authorization") String token,@PathVariable int locationId) {
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
         // 숫자를 지역 이름으로 매핑
         String location;
         switch (locationId) {
@@ -62,10 +68,14 @@ public class TheaterController {
     }
 
     @GetMapping("/screenings")
-    public List<ScreenDetail> getScreeningDetails(@RequestParam Long movieId,
+    public List<ScreenDetail> getScreeningDetails(@RequestHeader("Authorization") String token,@RequestParam Long movieId,
                                                   @RequestParam String screenDate,
                                                   @RequestParam String theaterName) {
 
+        String jwt = token.substring(7); // "Bearer " 제거
+
+        // 토큰 검증 및 사용자 정보 추출 (예: JWT에서 userId 추출)
+        jwtUtil.extractUserId(jwt); // jwtUtil은 JWT 유틸리티 클래스
         List<ScreenDetail> sd = theater.getScreeningDetails(movieId, screenDate, theaterName);
 
         System.out.println(screenDate + "날짜!!");

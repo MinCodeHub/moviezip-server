@@ -56,13 +56,13 @@ public class ChatMessageController {
 
     @MessageMapping("chat.enter.{roomId}")
     public void  enterRoom(@DestinationVariable String roomId, @Payload ChatMessage message) {
-            message.setType(ChatMessage.MessageType.ENTER);
-            message.setTimestamp(LocalDateTime.now());
-            message.setChatRoomId(roomId);
-            message.setContent(message.getSender() + "님이 입장하셨습니다.");
-            chatMessageService.saveMessage(message);
-            // 동적으로 토픽으로 메시지 보내기
-            simpMessagingTemplate.convertAndSend("/topic/chat/" + roomId, message);
+        message.setType(ChatMessage.MessageType.ENTER);
+        message.setTimestamp(LocalDateTime.now());
+        message.setChatRoomId(roomId);
+        message.setContent(message.getSender() + "님이 입장하셨습니다.");
+        chatMessageService.saveMessage(message);
+        // 동적으로 토픽으로 메시지 보내기
+        simpMessagingTemplate.convertAndSend("/topic/chat/" + roomId, message);
     }
     @MessageMapping("/chat/read")
     public void handleReadMessage(ReadMessagesDto readMessagesDto) {
