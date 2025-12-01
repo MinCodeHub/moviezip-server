@@ -6,6 +6,7 @@ DOCKER_APP_NAME=spring
 # blue 컨테이너 실행 여부 확인
 EXIST_BLUE=$(docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml ps | grep running)
 
+
 if [ -z "$EXIST_BLUE" ]; then
     echo "Deploy Blue"
     docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml up -d --build
