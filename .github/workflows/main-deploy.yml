@@ -57,25 +57,36 @@ jobs:
       - name: Make zip file
         run: |
           # deploy 디렉토리 생성
-          mkdir -p moviezip-server/deploy
-      
+          mkdir -p deploy
+
           # 파일 복사
-          cp moviezip-server/docker-compose-blue.yml moviezip-server/deploy/ || true
-          cp moviezip-server/docker-compose-green.yml moviezip-server/deploy/ || true
-          cp moviezip-server/appspec.yml moviezip-server/deploy/ || true
-          cp moviezip-server/Dockerfile moviezip-server/deploy/ || true
-          cp moviezip-server/scripts/*.sh moviezip-server/deploy/ || true
-          cp moviezip-server/deploy.sh moviezip-server/deploy/ || true
-      
+          cp docker-compose-blue.yml deploy/ || true
+          cp docker-compose-green.yml deploy/ || true
+          cp appspec.yml deploy/ || true
+          cp Dockerfile deploy/ || true
+          cp scripts/*.sh deploy/ || true
+          cp deploy.sh deploy/ || true
+
           # Maven 산출물 복사
-          cp moviezip-server/demo/target/*.jar moviezip-server/deploy/ || (echo "No jar found" && exit 1)
-      
+          if [ -d "demo/target" ]; then
+            cp demo/target/*.jar deploy/ || (echo "No jar found in demo/target" && exit 1)
+          else
+            echo "demo/target not found; did build step run?" && exit 1
+          fi
+
           # 실행 권한 부여
-          chmod -R a+x moviezip-server/deploy/*.sh || true
-      
+          chmod -R a+x deploy/*.sh || true
+
+          # 생성된 deploy 내용 확인 (디버그용)
+          ls -la deploy
+          ls -la deploy/*.sh
+          ls -la deploy/*.jar
+
           # zip 생성 (경로 제거)
-          zip -r -qq -j spring-build.zip moviezip-server/deploy
+          zip -r -qq -j spring-build.zip deploy
           echo "== spring-build.zip created =="
+          ls -la spring-build.zip
+
       # 7. AWS 자격증명 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
