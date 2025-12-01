@@ -56,9 +56,13 @@ jobs:
       # 6. zip 파일 생성
       - name: Make zip file
         run: |
-          cd demo
           mkdir -p deploy
-          cp ./target/*.jar ./deploy/
+          cp ./docker-compose.blue.yml ./deploy/
+          cp ./docker-compose.green.yml ./deploy/
+          cp ./appspec.yml ./deploy/
+          cp ./Dockerfile ./deploy/
+          cp ./scripts/*.sh ./deploy/
+          cp ./build/libs/*.jar ./deploy/
           zip -r -qq ./spring-build.zip ./deploy
           echo "== zip file created =="
 
