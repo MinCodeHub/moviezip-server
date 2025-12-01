@@ -8,6 +8,8 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET: moviezip-s3-source
+  CODEDEPLOY_APP_NAME: moviezip-deploy
+  CODEDEPLOY_DEPLOYMENT_GROUP: moviezip-deploy-group
 
 jobs:
   deploy:
@@ -68,8 +70,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # 8. S3 업로드
+     # 8. S3 업로드
       - name: Upload to S3
+        id: s3_upload
         run: |
           cd demo
           aws s3 cp ./spring-build.zip s3://${S3_BUCKET}/spring-build-${{ github.run_id }}.zip --region ${AWS_REGION}
+          echo "s3_key=spring-build-${{ github.run_id }}.zip" >> $GITHUB_OUTPUT
+
+       # 9. CodeDeploy 배포
+      - name: Deploy via CodeDeploy
+        uses: aws-actions/aws-codedeploy-deploy@v1
+        with:
+          application-name: ${{ env.CODEDEPLOY_APP_NAME }}
+          deployment-group: ${{ env.CODEDEPLOY_DEPLOYMENT_GROUP }}
+          s3-bucket: ${{ env.S3_BUCKET }}
+          s3-key: ${{ steps.s3_upload.outputs.s3_key }}
+          region: ${{ env.AWS_REGION }}    
