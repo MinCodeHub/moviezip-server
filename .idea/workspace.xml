@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] deploy 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-blue.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-blue.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-green.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-green.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -378,14 +379,6 @@
       <workItem from="1764514921334" duration="3690000" />
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
-    </task>
-    <task id="LOCAL-00124" summary="[feat] 비번 수정, 닉네임 수정 - UserDao 추가">
-      <option name="closed" value="true" />
-      <created>1730018333345</created>
-      <option name="number" value="00124" />
-      <option name="presentableId" value="LOCAL-00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1730018333345</updated>
     </task>
     <task id="LOCAL-00125" summary="[feat] 비번 수정, 닉네임 수정 - UserMapper 추가">
       <option name="closed" value="true" />
@@ -771,7 +764,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764599393074</updated>
     </task>
-    <option name="localTasksCounter" value="173" />
+    <task id="LOCAL-00173" summary="[infra] deploy 수정">
+      <option name="closed" value="true" />
+      <created>1764599942822</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1764599942822</updated>
+    </task>
+    <option name="localTasksCounter" value="174" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
