@@ -1,18 +1,23 @@
 #!/bin/bash
 cd /home/ec2-user/app
 
-# 1. 기존 컨테이너 종료 및 제거
-docker ps -aq --filter "name=moviezip" | xargs -r docker stop
-docker ps -aq --filter "name=moviezip" | xargs -r docker rm
+DOCKER_APP_NAME=spring
 
-# 2. zip 해제
-unzip -o spring-build.zip -d ./deploy
+# blue 컨테이너 실행 여부 확인
+EXIST_BLUE=$(docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml ps | grep running)
 
-# 3. Docker 이미지 빌드
-docker build -t moviezip ./deploy
+if [ -z "$EXIST_BLUE" ]; then
+    echo "Deploy Blue"
+    docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml up -d --build
+    sleep 30
+    docker-compose -p ${DOCKER_APP_NAME}-green -f docker-compose.green.yml down
+else
+    echo "Deploy Green"
+    docker-compose -p ${DOCKER_APP_NAME}-green -f docker-compose.green.yml up -d --build
+    sleep 30
+    docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml down
+fi
 
-# 4. 기존 이미지 제거 (선택)
-docker images -q --filter "dangling=true" | xargs -r docker rmi
-
-# 5. Docker 컨테이너 실행
-docker run -d --name moviezip -p 8080:8080 moviezip
+# 사용하지 않는 이미지 삭제
+docker image prune -af
+echo "Deployment completed!"

@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] pom.xml 있는 곳으로 위치 수정">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appspec.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
+    <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] CodeDeploy를 위한 deploy.sh, appspec.yml 추가">
+      <change afterPath="$PROJECT_DIR$/docker-compose-blue.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose-green.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -380,14 +380,6 @@
       <workItem from="1764514921334" duration="3690000" />
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
-    </task>
-    <task id="LOCAL-00111" summary="feat: add WebSocketConfig #9">
-      <option name="closed" value="true" />
-      <created>1729659971252</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1729659971252</updated>
     </task>
     <task id="LOCAL-00112" summary="feat: add WebSocketHandshakeInterceptor #9">
       <option name="closed" value="true" />
@@ -773,7 +765,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764576929455</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <task id="LOCAL-00160" summary="[infra] CodeDeploy를 위한 deploy.sh, appspec.yml 추가">
+      <option name="closed" value="true" />
+      <created>1764581677022</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1764581677022</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -791,7 +791,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: ex #9" />
     <MESSAGE value="[add] jwt 관련 라이브러리 추가" />
     <MESSAGE value="[add] 이전 변경 내역" />
     <MESSAGE value="[add] application.properties jwt 만료시간 등 추가" />
@@ -816,7 +815,8 @@
     <MESSAGE value="[chore] jwt 연동" />
     <MESSAGE value="[infra] application dev/prod 분리" />
     <MESSAGE value="[infra] pom.xml 있는 곳으로 위치 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="[infra] pom.xml 있는 곳으로 위치 수정" />
+    <MESSAGE value="[infra] CodeDeploy를 위한 deploy.sh, appspec.yml 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="[infra] CodeDeploy를 위한 deploy.sh, appspec.yml 추가" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

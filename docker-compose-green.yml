@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app_green:
+    build: .
+    container_name: moviezip-app-green
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      REDIS_HOST: host.docker.internal
+      REDIS_PORT: 6379
+      MONGODB_URI: mongodb://host.docker.internal:27017/movieZip
