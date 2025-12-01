@@ -42,7 +42,7 @@ jobs:
         env:
           APPLICATION: ${{ secrets.APPLICATION_PROD }}
         run: |
-          cd moviezip-server/demo
+          cd demo
           mkdir -p src/main/resources
           printf '%s' "$APPLICATION" > src/main/resources/application-prod.yml
           echo "== application-prod.yml created =="
@@ -50,18 +50,16 @@ jobs:
       # 5. Maven 빌드
       - name: Build with Maven
         run: |
-          cd moviezip-server/demo
+          cd demo
           mvn clean package -DskipTests
 
       # 6. zip 파일 생성
       - name: Make zip file
         run: |
-          cd moviezip-server
-
           # deploy 디렉토리 생성
           mkdir -p deploy
 
-          # 필요한 파일 복사
+          # 파일 복사
           cp docker-compose-blue.yml deploy/ || true
           cp docker-compose-green.yml deploy/ || true
           cp appspec.yml deploy/ || true
@@ -69,7 +67,7 @@ jobs:
           cp scripts/*.sh deploy/ || true
           cp deploy.sh deploy/ || true
 
-          # Maven 빌드 산출물 복사
+          # Maven 산출물 복사
           if [ -d "demo/target" ]; then
             cp demo/target/*.jar deploy/ || (echo "No jar found in demo/target" && exit 1)
           else
@@ -79,10 +77,15 @@ jobs:
           # 실행 권한 부여
           chmod -R a+x deploy/*.sh || true
 
-          # zip 생성 (deploy 안의 모든 파일 포함, 경로 제거)
-          zip -r -qq -j ../spring-build.zip deploy
+          # 생성된 deploy 내용 확인 (디버그용)
+          ls -la deploy
+          ls -la deploy/*.sh
+          ls -la deploy/*.jar
+
+          # zip 생성 (경로 제거)
+          zip -r -qq -j spring-build.zip deploy
           echo "== spring-build.zip created =="
-          ls -la ../spring-build.zip
+          ls -la spring-build.zip
 
       # 7. AWS 자격증명 설정
       - name: Configure AWS credentials
@@ -96,10 +99,10 @@ jobs:
       - name: Upload to S3
         id: s3_upload
         run: |
-          aws s3 cp ../spring-build.zip s3://${S3_BUCKET}/spring-build-${{ github.run_id }}.zip --region ${AWS_REGION}
+          aws s3 cp ./spring-build.zip s3://${S3_BUCKET}/spring-build-${{ github.run_id }}.zip --region ${AWS_REGION}
           echo "s3_key=spring-build-${{ github.run_id }}.zip" >> $GITHUB_OUTPUT
 
-      # 9. CodeDeploy 배포
+      # 9. CodeDeploy 배포 (AWS CLI 방식)
       - name: Deploy via CodeDeploy
         run: |
           aws deploy create-deployment \
