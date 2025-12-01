@@ -3,6 +3,7 @@ cd /home/ec2-user/app
 
 DOCKER_APP_NAME=spring
 
+
 # blue 컨테이너 실행 여부 확인
 EXIST_BLUE=$(docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml ps | grep running)
 
