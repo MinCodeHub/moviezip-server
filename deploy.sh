@@ -53,6 +53,7 @@ docker run -d --name ${DEPLOY_NAME} -p ${DEPLOY_PORT}:8080 \
   -e MONGODB_URI=mongodb://mongo:27017/movieZip \
   -e REDIS_HOST=redis \
   -e REDIS_PORT=6379 \
+  -e JWT_SECRET="VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa"
   ${IMAGE_NAME}
 
 sleep 10
