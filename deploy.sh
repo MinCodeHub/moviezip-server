@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+
 APP_NAME="moviezip-app"
 IMAGE_NAME="moviezip-server:latest"
 LOG_DIR="/home/ec2-user/app/logs"
