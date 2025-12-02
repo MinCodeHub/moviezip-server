@@ -16,6 +16,7 @@ services:
       - C:/MongoDB/data/db:/data/db
     command: ["--bind_ip_all"]
 
+
   app:
     build: .
     container_name: moviezip-server
