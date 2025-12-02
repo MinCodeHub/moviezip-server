@@ -1,24 +1,28 @@
 #!/bin/bash
 set -e
 
+# 로그 파일 생성
+LOG_DIR="/home/ec2-user/app/logs"
+mkdir -p ${LOG_DIR}
+exec > >(tee -i ${LOG_DIR}/deploy.log)
+exec 2>&1
+
+echo "Starting deployment..."
 
 APP_NAME="moviezip-app"
 IMAGE_NAME="moviezip-server:latest"
-LOG_DIR="/home/ec2-user/app/logs"
 
-mkdir -p ${LOG_DIR}
-
-# Docker build (JAR 포함)
+# Docker 빌드
 echo "Building Docker image..."
 docker build -t ${IMAGE_NAME} /home/ec2-user/app
 
-# Blue/Green 컨테이너 이름 및 포트 설정
+# Blue/Green 컨테이너 이름 및 포트
 BLUE_NAME="${APP_NAME}-blue"
 GREEN_NAME="${APP_NAME}-green"
 BLUE_PORT=8081
 GREEN_PORT=8082
 
-# 현재 실행 중인 Blue/Green 확인
+# 실행 중인 컨테이너 확인
 RUNNING_BLUE=$(docker ps --filter "name=${BLUE_NAME}" -q)
 RUNNING_GREEN=$(docker ps --filter "name=${GREEN_NAME}" -q)
 
@@ -57,5 +61,3 @@ sleep 10
 docker image prune -af
 
 echo "Deployment completed!"
-echo "Blue 로그: ${LOG_DIR}/blue.log"
-echo "Green 로그: ${LOG_DIR}/green.log"
