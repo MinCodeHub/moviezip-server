@@ -23,8 +23,8 @@ BLUE_PORT=8081
 GREEN_PORT=8082
 
 # 실행 중인 컨테이너 확인
-RUNNING_BLUE=$(docker ps --filter "name=${BLUE_NAME}" -q)
-RUNNING_GREEN=$(docker ps --filter "name=${GREEN_NAME}" -q)
+RUNNING_BLUE=$(docker ps -q -f name=${BLUE_NAME})
+RUNNING_GREEN=$(docker ps -q -f name=${GREEN_NAME})
 
 # 배포할 컨테이너 결정
 if [ -z "$RUNNING_BLUE" ]; then
@@ -39,9 +39,10 @@ else
     echo "Deploying Green..."
 fi
 
-# 이전 컨테이너 종료
-if [ ! -z "$STOP_NAME" ]; then
-    docker rm -f ${STOP_NAME} || true
+# 이전 컨테이너가 실제 존재하면 종료
+if [ $(docker ps -a -q -f name=${STOP_NAME}) ]; then
+    echo "Stopping old container: ${STOP_NAME}"
+    docker rm -f ${STOP_NAME}
 fi
 
 # 새 컨테이너 실행
@@ -54,8 +55,9 @@ docker run -d --name ${DEPLOY_NAME} -p ${DEPLOY_PORT}:8080 \
   -e REDIS_HOST=redis \
   -e REDIS_PORT=6379 \
   -e JWT_SECRET="VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa" \
-  ${IMAGE_NAME}
+  ${IMAGE_NAME} \
   java -jar /app/app.jar
+
 sleep 10
 
 # 불필요한 이미지 정리
