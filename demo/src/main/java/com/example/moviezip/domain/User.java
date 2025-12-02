@@ -1,26 +1,15 @@
 package com.example.moviezip.domain;
 
-import com.example.moviezip.domain.chat.ChatRoom;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
-
+import org.apache.ibatis.type.Alias;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "USER_TABLE")
-public class User  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Alias("User")
+public class User {
     private Long id;
     private String userId;
     private String password;
@@ -31,10 +20,9 @@ public class User  {
     public User(Long id) {
         this.id = id;
     }
-    public User( String userId, String password) {
+
+    public User(String userId, String password) {
         this.userId = userId;
         this.password = password;
     }
-
-
 }

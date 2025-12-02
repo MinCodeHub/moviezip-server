@@ -1,7 +1,10 @@
 package com.example.moviezip.domain;
 
+import org.apache.ibatis.type.Alias;
+
 import java.io.Serializable;
 
+@Alias("Review")
 public class Review extends Movie {
     private Long rvId;
     private int rvStar;

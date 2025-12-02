@@ -22,9 +22,8 @@ public class jwtUtil {
     private long ACCESS_TOKEN_EXPIRATION;
     @Value("${token.refresh-token-expire-time}")
     private long REFRESH_TOKEN_EXPIRATION;
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-    //JWT 토큰 생성
+
+     //JWT 토큰 생성
     public String createAccessToken(Long userId, String username, String role) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("userId", userId);

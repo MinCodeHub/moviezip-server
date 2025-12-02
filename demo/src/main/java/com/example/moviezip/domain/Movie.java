@@ -1,8 +1,16 @@
 package com.example.moviezip.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.apache.ibatis.type.Alias;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Getter
+@Setter
+@Alias("Movie")
 public class Movie implements Serializable {
 
     private Long mvId;

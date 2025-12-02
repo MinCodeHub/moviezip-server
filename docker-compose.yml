@@ -14,4 +14,21 @@ services:
       - "27017:27017"
     volumes:
       - C:/MongoDB/data/db:/data/db
-    command: ["--bind_ip_all"]  # 외부 접속 허용
+    command: ["--bind_ip_all"]
+
+  app:
+    build: .
+    container_name: moviezip-server
+    depends_on:
+      - redis
+      - mongo
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@dblab.dongduk.ac.kr:1521/orclpdb
+      SPRING_DATASOURCE_USERNAME: ss240205
+      SPRING_DATASOURCE_PASSWORD: ss240205ss
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/movieZip
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "8080:8080"
