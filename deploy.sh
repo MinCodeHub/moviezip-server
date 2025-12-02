@@ -40,10 +40,12 @@ else
 fi
 
 # 이전 컨테이너가 실제 존재하면 종료
-if [ $(docker ps -a -q -f name=${STOP_NAME}) ]; then
+STOP_CONTAINER=$(docker ps -a -q -f name=${STOP_NAME})
+if [ -n "$STOP_CONTAINER" ]; then
     echo "Stopping old container: ${STOP_NAME}"
-    docker rm -f ${STOP_NAME}
+    docker rm -f $STOP_CONTAINER
 fi
+
 
 # 새 컨테이너 실행
 docker run -d --name ${DEPLOY_NAME} -p ${DEPLOY_PORT}:8080 \
