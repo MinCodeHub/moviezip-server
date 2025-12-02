@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] Dockerfile 수정">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -377,14 +378,6 @@
       <workItem from="1764514921334" duration="3690000" />
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
-    </task>
-    <task id="LOCAL-00139" summary="refact: [feat] 그 외">
-      <option name="closed" value="true" />
-      <created>1736245767471</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1736245767471</updated>
     </task>
     <task id="LOCAL-00140" summary="refact: [feat] refreshToken사용해서 accessToken 재발급 기능 추가">
       <option name="closed" value="true" />
@@ -770,7 +763,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764651169509</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="[infra] Dockerfile 수정">
+      <option name="closed" value="true" />
+      <created>1764651380330</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1764651380330</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

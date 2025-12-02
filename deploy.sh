@@ -39,11 +39,12 @@ else
     echo "Deploying Green..."
 fi
 
-# 이전 컨테이너가 실제 존재하면 종료
+# 이전 컨테이너 종료 (존재하면 Exited 포함)
 STOP_CONTAINER=$(docker ps -a -q -f name=${STOP_NAME})
 if [ -n "$STOP_CONTAINER" ]; then
     echo "Stopping old container: ${STOP_NAME}"
-    docker rm -f $STOP_CONTAINER
+    docker ps -a -f name=$STOP_NAME   # 삭제 전 확인용 로그
+    docker rm -f $STOP_CONTAINER || true
 fi
 
 
