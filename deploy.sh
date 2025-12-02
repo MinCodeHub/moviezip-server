@@ -55,7 +55,7 @@ docker run -d --name ${DEPLOY_NAME} -p ${DEPLOY_PORT}:8080 \
   -e REDIS_PORT=6379 \
   -e JWT_SECRET="VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa" \
   ${IMAGE_NAME}
-
+  java -jar /app/app.jar
 sleep 10
 
 # 불필요한 이미지 정리
