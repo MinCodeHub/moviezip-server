@@ -378,14 +378,6 @@
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
     </task>
-    <task id="LOCAL-00144" summary="[issue] 권한 추출 이슈 해결">
-      <option name="closed" value="true" />
-      <created>1738146099877</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1738146099877</updated>
-    </task>
     <task id="LOCAL-00145" summary="[feat] 필요없는 주석 제거">
       <option name="closed" value="true" />
       <created>1738146918422</created>
@@ -770,7 +762,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764774338312</updated>
     </task>
-    <option name="localTasksCounter" value="193" />
+    <task id="LOCAL-00193" summary="[infra] 다시 배포">
+      <option name="closed" value="true" />
+      <created>1764775112666</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1764775112666</updated>
+    </task>
+    <option name="localTasksCounter" value="194" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

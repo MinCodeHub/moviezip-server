@@ -47,6 +47,18 @@ if [ -n "$STOP_CONTAINER" ]; then
     docker rm -f $STOP_CONTAINER || true
 fi
 
+# 환경변수 값 확인 (배포 전)
+echo "=== Environment Variables ==="
+echo "SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}"
+echo "DB_URL=${DB_URL}"
+echo "DB_USERNAME=${DB_USERNAME}"
+echo "DB_PASSWORD=${DB_PASSWORD}"
+echo "MONGODB_URI=${MONGODB_URI}"
+echo "REDIS_HOST=${REDIS_HOST}"
+echo "REDIS_PORT=${REDIS_PORT}"
+echo "JWT_SECRET=${JWT_SECRET}"
+echo "============================="
+
 # 새 컨테이너 실행 (GitHub Actions에서 환경변수 주입)
 docker run -d --name ${DEPLOY_NAME} -p ${DEPLOY_PORT}:8080 \
   -e SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} \
