@@ -29,7 +29,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ss240205ss
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/movieZip
+      SPRING_DATA_MONGODB_URI: mongodb://moviezip-mongo:27017/movieZip
       SPRING_PROFILES_ACTIVE: dev
     ports:
       - "8080:8080"
