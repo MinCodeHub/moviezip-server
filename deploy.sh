@@ -47,17 +47,16 @@ if [ -n "$STOP_CONTAINER" ]; then
     docker rm -f $STOP_CONTAINER || true
 fi
 
-
-# 새 컨테이너 실행
+# 새 컨테이너 실행 (GitHub Actions에서 환경변수 주입)
 docker run -d --name ${DEPLOY_NAME} -p ${DEPLOY_PORT}:8080 \
-  -e SPRING_PROFILES_ACTIVE=prod \
-  -e DB_URL=jdbc:oracle:thin:@dblab.dongduk.ac.kr:1521/orclpdb \
-  -e DB_USERNAME=ss240205 \
-  -e DB_PASSWORD=ss240205ss \
-  -e MONGODB_URI=mongodb://mongo:27017/movieZip \
-  -e REDIS_HOST=redis \
-  -e REDIS_PORT=6379 \
-  -e JWT_SECRET="VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa" \
+  -e SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} \
+  -e DB_URL=${DB_URL} \
+  -e DB_USERNAME=${DB_USERNAME} \
+  -e DB_PASSWORD=${DB_PASSWORD} \
+  -e MONGODB_URI=${MONGODB_URI} \
+  -e REDIS_HOST=${REDIS_HOST} \
+  -e REDIS_PORT=${REDIS_PORT} \
+  -e JWT_SECRET=${JWT_SECRET} \
   ${IMAGE_NAME} \
   java -jar /app/app.jar
 
