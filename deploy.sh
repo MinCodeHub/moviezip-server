@@ -7,6 +7,10 @@ mkdir -p ${LOG_DIR}
 exec > >(tee -i ${LOG_DIR}/deploy.log)
 exec 2>&1
 
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
 echo "Starting deployment..."
 
 APP_NAME="moviezip-app"
