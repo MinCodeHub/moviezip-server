@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] 다시 배포">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] 다시배포">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
     </list>
@@ -380,22 +378,6 @@
       <workItem from="1764514921334" duration="3690000" />
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
-    </task>
-    <task id="LOCAL-00146" summary="[feat] 필요없는 주석 제거">
-      <option name="closed" value="true" />
-      <created>1738146930235</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1738146930235</updated>
-    </task>
-    <task id="LOCAL-00147" summary="[feat] 필요없는 주석 제거">
-      <option name="closed" value="true" />
-      <created>1738211924664</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1738211924664</updated>
     </task>
     <task id="LOCAL-00148" summary="[feat] Filter 정리">
       <option name="closed" value="true" />
@@ -773,7 +755,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764775698289</updated>
     </task>
-    <option name="localTasksCounter" value="195" />
+    <task id="LOCAL-00195" summary="[infra] .gitignore추가">
+      <option name="closed" value="true" />
+      <created>1764776133692</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1764776133692</updated>
+    </task>
+    <task id="LOCAL-00196" summary="[infra] 다시배포">
+      <option name="closed" value="true" />
+      <created>1764776142866</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1764776142866</updated>
+    </task>
+    <option name="localTasksCounter" value="197" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -791,8 +789,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refact: [feat] refreshToken사용해서 accessToken 재발급 기능 추가" />
-    <MESSAGE value="refact: [feat] 커스텀에러 처리 추가" />
     <MESSAGE value="refact: [feat] 그 외" />
     <MESSAGE value="refact: [feat] accessToken 재발급 기능 완료" />
     <MESSAGE value="[issue] 권한 추출 이슈 해결" />
@@ -816,7 +812,9 @@
     <MESSAGE value="[infra] Dockerfile 수정" />
     <MESSAGE value="[infra] 확인" />
     <MESSAGE value="[infra] 다시 배포" />
-    <option name="LAST_COMMIT_MESSAGE" value="[infra] 다시 배포" />
+    <MESSAGE value="[infra] .gitignore추가" />
+    <MESSAGE value="[infra] 다시배포" />
+    <option name="LAST_COMMIT_MESSAGE" value="[infra] 다시배포" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -7,14 +7,39 @@ mkdir -p ${LOG_DIR}
 exec > >(tee -i ${LOG_DIR}/deploy.log)
 exec 2>&1
 
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
-fi
-
 echo "Starting deployment..."
 
 APP_NAME="moviezip-app"
 IMAGE_NAME="moviezip-server:latest"
+
+# .env 파일이 있으면 읽어오기
+ENV_FILE="/home/ec2-user/app/.env"
+if [ -f ${ENV_FILE} ]; then
+  echo "Loading environment variables from ${ENV_FILE}"
+  export $(grep -v '^#' ${ENV_FILE} | xargs)
+fi
+
+# 필수 환경변수 기본값 (GitHub Actions에서 안 줘도 fail 방지)
+: "${SPRING_PROFILES_ACTIVE:=prod}"
+: "${DB_URL:=jdbc:oracle:thin:@dblab.dongduk.ac.kr:1521/orclpdb}"
+: "${DB_USERNAME:=ss240205}"
+: "${DB_PASSWORD:=ss240205ss}"
+: "${MONGODB_URI:=mongodb://moviezip-mongo:27017/movieZip}"
+: "${REDIS_HOST:=redis}"
+: "${REDIS_PORT:=6379}"
+: "${JWT_SECRET:=VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa}"
+
+# 환경변수 확인
+echo "=== Environment Variables ==="
+echo "SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}"
+echo "DB_URL=${DB_URL}"
+echo "DB_USERNAME=${DB_USERNAME}"
+echo "DB_PASSWORD=${DB_PASSWORD}"
+echo "MONGODB_URI=${MONGODB_URI}"
+echo "REDIS_HOST=${REDIS_HOST}"
+echo "REDIS_PORT=${REDIS_PORT}"
+echo "JWT_SECRET=${JWT_SECRET}"
+echo "============================="
 
 # Docker 빌드
 echo "Building Docker image..."
@@ -43,27 +68,15 @@ else
     echo "Deploying Green..."
 fi
 
-# 이전 컨테이너 종료 (존재하면 Exited 포함)
+# 이전 컨테이너 종료
 STOP_CONTAINER=$(docker ps -a -q -f name=${STOP_NAME})
 if [ -n "$STOP_CONTAINER" ]; then
     echo "Stopping old container: ${STOP_NAME}"
-    docker ps -a -f name=$STOP_NAME   # 삭제 전 확인용 로그
+    docker ps -a -f name=$STOP_NAME
     docker rm -f $STOP_CONTAINER || true
 fi
 
-# 환경변수 값 확인 (배포 전)
-echo "=== Environment Variables ==="
-echo "SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}"
-echo "DB_URL=${DB_URL}"
-echo "DB_USERNAME=${DB_USERNAME}"
-echo "DB_PASSWORD=${DB_PASSWORD}"
-echo "MONGODB_URI=${MONGODB_URI}"
-echo "REDIS_HOST=${REDIS_HOST}"
-echo "REDIS_PORT=${REDIS_PORT}"
-echo "JWT_SECRET=${JWT_SECRET}"
-echo "============================="
-
-# 새 컨테이너 실행 (GitHub Actions에서 환경변수 주입)
+# 새 컨테이너 실행
 docker run -d --name ${DEPLOY_NAME} -p ${DEPLOY_PORT}:8080 \
   -e SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} \
   -e DB_URL=${DB_URL} \
