@@ -21,3 +21,9 @@ services:
       - "8081:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
+    # 👇 이 부분을 추가하여 MongoDB와 Redis가 먼저 시작되도록 보장합니다.
+    depends_on:
+      mongo:
+        condition: service_started
+      redis:
+        condition: service_started

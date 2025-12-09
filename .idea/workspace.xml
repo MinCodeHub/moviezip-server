@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] 다시배포">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-blue.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-blue.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -378,15 +379,7 @@
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
       <workItem from="1765027372945" duration="1353000" />
-      <workItem from="1765259684930" duration="807000" />
-    </task>
-    <task id="LOCAL-00148" summary="[feat] Filter 정리">
-      <option name="closed" value="true" />
-      <created>1738211941313</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1738211941313</updated>
+      <workItem from="1765259684930" duration="1954000" />
     </task>
     <task id="LOCAL-00149" summary="[feat] JwtRequestFilter 정리 - refreshToken 관련 부분 삭제">
       <option name="closed" value="true" />
@@ -772,7 +765,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764776142866</updated>
     </task>
-    <option name="localTasksCounter" value="197" />
+    <task id="LOCAL-00197" summary="[infra] 다시배포">
+      <option name="closed" value="true" />
+      <created>1765260501831</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1765260501831</updated>
+    </task>
+    <option name="localTasksCounter" value="198" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
