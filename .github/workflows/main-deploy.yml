@@ -40,12 +40,28 @@ jobs:
       - name: Create src/main/resources and write application-prod.yml
         shell: bash
         env:
-          APPLICATION: ${{ secrets.APPLICATION_PROD }}
+          APPLICATION: ${{ secrets.APPLICATION_PROD }} # 나머지 설정 내용
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          REDIS_HOST: ${{ secrets.REDIS_HOST }} # 도커 컴포즈의 redis 서비스 이름: redis
+          REDIS_PORT: ${{ secrets.REDIS_PORT  }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }} # 도커 컴포즈의 mongo 서비스 이름: mongodb://mongo:27017/dbname
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           cd demo
           mkdir -p src/main/resources
-          printf '%s' "$APPLICATION" > src/main/resources/application-prod.yml
-          echo "== application-prod.yml created =="
+          # 기존 APPLICATION 내용을 먼저 쓰고, 환경 변수를 뒤에 추가하거나 치환
+          printf '%s\n' "$APPLICATION" \
+            | sed "s|\${DB_URL}|$DB_URL|" \
+            | sed "s|\${DB_USERNAME}|$DB_USERNAME|" \
+            | sed "s|\${DB_PASSWORD}|$DB_PASSWORD|" \
+            | sed "s|\${REDIS_HOST}|$REDIS_HOST|" \
+            | sed "s|\${REDIS_PORT}|$REDIS_PORT|" \
+            | sed "s|\${MONGODB_URI}|$MONGODB_URI|" \
+            | sed "s|\${JWT_SECRET}|$JWT_SECRET|" \
+            > src/main/resources/application-prod.yml
+          echo "== application-prod.yml created and values inserted =="
 
       # 5. Maven 빌드
       - name: Build with Maven
