@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6a7d57ef-2873-46e8-8ed0-390a1bfd60d1" name="Changes" comment="[infra] 다시배포">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,55 +58,55 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.LoginTest.executor": "Run",
-    "JUnit.LoginTest.testLogin.executor": "Run",
-    "JUnit.MovieCacheRecommenderServiceTest.executor": "Run",
-    "JUnit.MovieRecommendTest.executor": "Run",
-    "JUnit.MovieRecommendTest.testRecommendMoviesSpeedComparison.executor": "Run",
-    "JUnit.MovieRecommendTest.testRecommendMoviesWithCache (1).executor": "Run",
-    "JUnit.ReservationTest.executor": "Run",
-    "JUnit.ReservationTest.testReservation.executor": "Run",
-    "JUnit.TheaterTest.executor": "Run",
-    "JUnit.TheaterTest.getScrrenTime.executor": "Run",
-    "JUnit.TheaterTest.getTheaterByLocation.executor": "Run",
-    "JUnit.WishTest.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.MoviezipApplication.executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "D:/4th_grade/1st_semester/SoftwareContest/MovieZip_BE/demo/src/test/java",
-    "last_opened_file_path": "C:/Project/MovieZip/moviezip-server",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.3573701",
-    "settings.editor.selected.configurable": "configurable.group.build",
-    "spring.configuration.checksum": "fe01ce2a7fbac8fafaed7c982a04e229",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.LoginTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.LoginTest.testLogin.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MovieCacheRecommenderServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MovieRecommendTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MovieRecommendTest.testRecommendMoviesSpeedComparison.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MovieRecommendTest.testRecommendMoviesWithCache (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ReservationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ReservationTest.testReservation.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TheaterTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TheaterTest.getScrrenTime.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TheaterTest.getTheaterByLocation.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.WishTest.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MoviezipApplication.executor&quot;: &quot;Run&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;D:/4th_grade/1st_semester/SoftwareContest/MovieZip_BE/demo/src/test/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Project/MovieZip/moviezip-server&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3573701&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.build&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;fe01ce2a7fbac8fafaed7c982a04e229&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mongo",
-      "oracle"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mongo&quot;,
+      &quot;oracle&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -378,6 +377,8 @@
       <workItem from="1764514921334" duration="3690000" />
       <workItem from="1764519233396" duration="2410000" />
       <workItem from="1764548955176" duration="11946000" />
+      <workItem from="1765027372945" duration="1353000" />
+      <workItem from="1765259684930" duration="807000" />
     </task>
     <task id="LOCAL-00148" summary="[feat] Filter 정리">
       <option name="closed" value="true" />
